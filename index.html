@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardiões das Plantas - Missão Internacional</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Cursor Personalizado -->
+    <div id="custom-cursor"></div>
+
+    <!-- Música e Sons -->
+    <audio id="bg-music" loop src="https://www.chosic.com/wp-content/uploads/2021/07/The-Green-Leaves-of-Summer.mp3"></audio>
+    <div class="audio-controls">
+        <button id="toggle-music" class="btn-circle">🎵</button>
+    </div>
+
+    <!-- 1. PORTAL INICIAL -->
+    <section id="home" class="active">
+        <div class="particles" id="particles-js"></div>
+        <div class="hero-content">
+            <img src="images/super-morango.png" alt="Super Morango" class="floating-hero">
+            <h1 id="typing-text"></h1>
+            <button onclick="changeSection('story')" class="btn-main pulse">Entrar na Missão</button>
+        </div>
+    </section>
+
+    <!-- 2. HISTÓRIA -->
+    <section id="story">
+        <div class="story-container">
+            <div class="story-block" data-aos="fade-up">
+                <h2>O Mistério das Folhas Tristes</h2>
+                <p>O Super Morango descobriu que muitas plantas estão a ficar doentes por causa de pequenos invasores e falta de cuidado...</p>
+            </div>
+            <div class="story-block" data-aos="fade-up">
+                <h2>A Ameaça das Pragas</h2>
+                <p>Insetos viajantes e doenças estão a atacar as nossas florestas. Sem as plantas, o oxigénio desaparece!</p>
+            </div>
+            <button onclick="changeSection('mission-info')" class="btn-next">Próximo: A Nossa Missão ➔</button>
+        </div>
+    </section>
+
+    <!-- 3. MISSÃO INFO (Cards) -->
+    <section id="mission-info">
+        <h2>Por que as plantas são importantes?</h2>
+        <div class="cards-container">
+            <div class="card" onclick="openModal('oxigenio')">
+                <span>🌬️</span>
+                <h3>Oxigénio</h3>
+            </div>
+            <div class="card" onclick="openModal('comida')">
+                <span>🍎</span>
+                <h3>Comida</h3>
+            </div>
+            <div class="card" onclick="openModal('equilibrio')">
+                <span>🌍</span>
+                <h3>Equilíbrio</h3>
+            </div>
+        </div>
+        <button onclick="changeSection('game')" class="btn-main">Começar Jogo Interativo</button>
+    </section>
+
+    <!-- 4. JOGO INTERATIVO -->
+    <section id="game">
+        <div class="game-header">
+            <div class="score">Pontos: <span id="points">0</span></div>
+            <div class="progress-bar-container">
+                <div id="progress-bar"></div>
+            </div>
+            <div id="scenario-title">Cenário: Horta</div>
+        </div>
+        <div id="game-canvas">
+            <!-- Os elementos clicáveis serão gerados via JS -->
+        </div>
+    </section>
+
+    <!-- 5. QUESTIONÁRIO FINAL -->
+    <section id="quiz">
+        <div class="quiz-box">
+            <h2 id="quiz-question">Pergunta?</h2>
+            <div id="quiz-options"></div>
+        </div>
+    </section>
+
+    <!-- 6. CERTIFICADO -->
+    <section id="certificate-section">
+        <h2>Parabéns, Guardião!</h2>
+        <input type="text" id="user-name" placeholder="Escreve o teu nome">
+        <button onclick="generateCertificate()" class="btn-main">Gerar Certificado</button>
+        <canvas id="certCanvas" width="800" height="600" style="display:none;"></canvas>
+        <div id="cert-preview"></div>
+    </section>
+
+    <!-- Overlay Modais -->
+    <div id="modal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2 id="modal-title"></h2>
+            <p id="modal-text"></p>
+            <button onclick="closeModal()">Fechar</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
