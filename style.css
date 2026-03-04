@@ -1,0 +1,168 @@
+:root {
+    --verde: #2ECC71;
+    --verde-escuro: #27AE60;
+    --morango: #FF4757;
+    --amarelo: #FFD32D;
+    --branco: #FFFFFF;
+    --fonte: 'Quicksand', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none; /* Vamos usar o personalizado */
+}
+
+body {
+    font-family: var(--fonte);
+    overflow-x: hidden;
+    background-color: #f0f9f4;
+}
+
+/* Cursor Customizado */
+#custom-cursor {
+    width: 20px;
+    height: 20px;
+    background: var(--morango);
+    border: 3px solid white;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+}
+
+/* Secções */
+section {
+    display: none;
+    min-height: 100vh;
+    padding: 50px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.5s ease-in-out;
+}
+
+section.active {
+    display: flex;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Home */
+#home {
+    background: linear-gradient(135deg, var(--verde), #a8e063);
+    color: white;
+}
+
+.floating-hero {
+    width: 250px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Botões */
+.btn-main {
+    background: var(--morango);
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    border-radius: 50px;
+    font-weight: bold;
+    box-shadow: 0 10px 0 #c0392b;
+    transition: 0.2s;
+}
+
+.btn-main:active {
+    transform: translateY(5px);
+    box-shadow: 0 5px 0 #c0392b;
+}
+
+/* Cards Missão */
+.cards-container {
+    display: flex;
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 200px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.1) rotate(3deg);
+    border: 3px solid var(--verde);
+}
+
+.card span { font-size: 3rem; }
+
+/* Jogo */
+#game-canvas {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    border: 10px solid white;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.hotspot {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.hotspot:hover { transform: scale(1.2); }
+
+/* Progress Bar */
+.progress-bar-container {
+    width: 300px;
+    height: 20px;
+    background: #ddd;
+    border-radius: 10px;
+    margin: 10px auto;
+}
+
+#progress-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--verde);
+    border-radius: 10px;
+    transition: 0.5s;
+}
+
+/* Modais */
+.modal-overlay {
+    position: fixed;
+    top:0; left:0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    max-width: 500px;
+}
