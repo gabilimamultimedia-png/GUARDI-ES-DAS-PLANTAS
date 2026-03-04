@@ -3,124 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guardiões das Plantas | International Plant Health Day</title>
-    <!-- Fontes Premium -->
+    <title>Guardiões das Plantas | UN International Plant Health Day</title>
+    
+    <!-- Fonte Premium -->
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        :root {
+            --p-green: #0b1d12;
+            --v-green: #2ecc71;
+            --strawberry: #ff4757;
+            --glass: rgba(255, 255, 255, 0.08);
+            --font: 'Lexend', sans-serif;
+        }
+
+        /* Reset e Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--p-green); 
+            color: white; 
+            font-family: var(--font); 
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Cursor Personalizado */
+        #cursor {
+            width: 10px; height: 10px; background: white; border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 10000;
+        }
+        #cursor-f {
+            width: 35px; height: 35px; border: 2px solid var(--v-green); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--p-green); z-index: 20000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.8s ease;
+        }
+        .spinner {
+            width: 50px; height: 50px; border: 5px solid var(--glass);
+            border-top-color: var(--v-green); border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Navegação */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 25px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(15px); background: rgba(11, 29, 18, 0.7);
+            z-index: 1000; border-bottom: 1px solid var(--glass);
+        }
+        .logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
+        .logo span { color: var(--v-green); }
+
+        /* Hero Section */
+        section { min-height: 100vh; padding: 120px 8% 60px; display: flex; align-items: center; }
+        
+        #hero { 
+            background: radial-gradient(circle at 70% 50%, #1a472a 0%, #0b1d12 100%);
+            justify-content: space-between;
+        }
+        .hero-text { max-width: 600px; }
+        .badge { 
+            background: var(--glass); padding: 8px 16px; border-radius: 50px; 
+            font-size: 0.8rem; color: var(--v-green); font-weight: 600;
+            display: inline-block; margin-bottom: 20px; border: 1px solid var(--v-green);
+        }
+        h1 { font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 25px; }
+        .highlight { color: var(--v-green); }
+        
+        .btn-primary {
+            background: var(--v-green); color: var(--p-green); border: none;
+            padding: 20px 40px; border-radius: 14px; font-weight: 700;
+            font-size: 1.1rem; cursor: pointer; transition: 0.3s;
+            text-decoration: none; display: inline-block;
+        }
+        .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(46, 204, 113, 0.3); }
+
+        .hero-img img { width: 450px; animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+
+        /* Bento Grid - História/Missão */
+        .bento {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; width: 100%;
+        }
+        .bento-card {
+            background: var(--glass); border-radius: 24px; padding: 40px;
+            border: 1px solid rgba(255,255,255,0.05); transition: 0.4s;
+        }
+        .bento-card:hover { border-color: var(--v-green); transform: translateY(-10px); }
+        .wide { grid-column: span 2; }
+        .tall { grid-row: span 2; }
+
+        /* Jogo / Laboratório */
+        #game { flex-direction: column; background: #08100b; }
+        .game-container {
+            width: 100%; max-width: 1100px; height: 600px; background: #000;
+            border-radius: 30px; position: relative; overflow: hidden;
+            border: 4px solid var(--glass); margin-top: 40px;
+        }
+        .scan-line {
+            position: absolute; width: 100%; height: 4px; background: rgba(46, 204, 113, 0.5);
+            top: 0; animation: scan 4s linear infinite; z-index: 5;
+        }
+        @keyframes scan { from { top: 0; } to { top: 100%; } }
+
+        .praga {
+            position: absolute; width: 50px; height: 50px; cursor: pointer;
+            transition: 0.3s; filter: brightness(0.5) saturate(0);
+        }
+        .praga:hover { filter: brightness(1) saturate(1) drop-shadow(0 0 10px red); transform: scale(1.2); }
+
+        /* Formulário Certificado */
+        .cert-box {
+            background: white; color: var(--p-green); padding: 60px;
+            border-radius: 30px; text-align: center; width: 100%; max-width: 700px;
+            margin: 0 auto;
+        }
+        input {
+            width: 100%; padding: 20px; border-radius: 12px; border: 2px solid #ddd;
+            font-size: 1.2rem; margin: 20px 0; font-family: var(--font);
+        }
+
+        /* Responsividade */
+        @media (max-width: 900px) {
+            h1 { font-size: 3rem; }
+            .hero-img img { width: 300px; }
+            .bento { grid-template-columns: 1fr; }
+            .wide, .tall { grid-column: span 1; grid-row: span 1; }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Overlay de Carregamento (Portal Mágico) -->
     <div id="loader">
-        <div class="strawberry-spinner"></div>
-        <p>A carregar Biosfera...</p>
+        <div class="spinner"></div>
+        <p style="margin-top: 20px; font-weight: 300; letter-spacing: 2px;">INICIALIZANDO BIOSFERA...</p>
     </div>
 
-    <!-- Cursor Personalizado de Alta Precisão -->
     <div id="cursor"></div>
-    <div id="cursor-follower"></div>
+    <div id="cursor-f"></div>
 
-    <nav class="glass-nav">
+    <nav>
         <div class="logo">GUARDIÕES<span>PLANTAS</span></div>
-        <div class="nav-stats">
-            <span id="nav-points">🌱 0 XP</span>
-            <button id="toggle-audio" title="Música Ambiente">🔇</button>
+        <div style="display:flex; gap: 20px; align-items:center;">
+            <span id="score-display" style="color: var(--v-green); font-weight: 600;">XP: 0000</span>
+            <button onclick="toggleMute()" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">🔊</button>
         </div>
     </nav>
 
-    <main id="main-scroller">
-        
-        <!-- SECÇÃO 1: HERO (PORTAL) -->
-        <section id="hero" class="vignette">
-            <div class="hero-bg-elements"></div>
-            <div class="content">
-                <div class="badge">Missão ONU 2024</div>
-                <h1 class="reveal-text">Protege o Verde,<br><span class="highlight">Salva o Futuro.</span></h1>
-                <p id="typing-hero" class="typewriter"></p>
-                <div class="hero-cta">
-                    <button class="btn-primary" onclick="scrollToSection('story')">Iniciar Missão</button>
-                    <button class="btn-secondary" onclick="scrollToSection('game')">Ir para o Laboratório</button>
-                </div>
+    <main>
+        <!-- Secção 1 -->
+        <section id="hero">
+            <div class="hero-text">
+                <div class="badge">International Plant Health Day</div>
+                <h1>Protege o Verde,<br><span class="highlight">Salva o Mundo.</span></h1>
+                <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 35px;">
+                    O Presidente da ONU convocou-te. Como Guardião, a tua missão é identificar pragas e garantir que as plantas continuam a produzir o ar que respiramos.
+                </p>
+                <a href="#game" class="btn-primary">Iniciar Protocolo de Defesa</a>
             </div>
-            <div class="hero-image">
-                <img src="images/super-morango.png" alt="Super Morango" class="float-animation">
+            <div class="hero-img">
+                <img src="images/super-morango.png" alt="Super Morango">
             </div>
         </section>
 
-        <!-- SECÇÃO 2: STORYTELLING (BENTO GRID) -->
-        <section id="story">
-            <div class="container">
-                <h2 class="section-title">A Ciência por trás do Verde</h2>
-                <div class="bento-grid">
-                    <div class="bento-item tall" style="background-image: url('images/fundo-floresta.jpg');">
-                        <div class="overlay-text">
-                            <h3>Oxigénio Puro</h3>
-                            <p>80% do que respiras vem das plantas.</p>
+        <!-- Secção 2 -->
+        <section id="mission" style="background: #0d2617;">
+            <div style="width:100%">
+                <h2 style="font-size: 2.5rem; margin-bottom: 40px; text-align: center;">Relatório de Bio-Vigilância</h2>
+                <div class="bento">
+                    <div class="bento-card wide">
+                        <h3 style="color: var(--v-green); margin-bottom: 10px;">Oxigénio Global</h3>
+                        <p>As plantas saudáveis são responsáveis por 80% da comida que comemos e 98% do oxigénio que respiramos. Sem elas, o ciclo da vida para.</p>
+                    </div>
+                    <div class="bento-card tall" style="background-image: url('images/fundo-floresta.jpg'); background-size: cover;">
+                        <div style="background: rgba(0,0,0,0.6); padding: 20px; height: 100%; border-radius: 15px;">
+                            <h3>Biodiversidade</h3>
+                            <p>A saúde das plantas está em risco devido às alterações climáticas e atividades humanas.</p>
                         </div>
                     </div>
-                    <div class="bento-item wide">
-                        <h3>A Ameaça Silenciosa</h3>
-                        <p>Pragas invasoras destroem 40% das culturas alimentares mundiais todos os anos.</p>
+                    <div class="bento-card">
+                        <h3>Pragas Invasoras</h3>
+                        <p>Todos os anos, perdemos 40% das colheitas mundiais para pragas.</p>
                     </div>
-                    <div class="bento-item">
-                        <h3>Biodiversidade</h3>
-                        <p>Cada planta é um ecossistema.</p>
-                    </div>
-                    <div class="bento-item">
-                        <img src="images/super-morango.png" class="small-hero">
-                        <h3>O Teu Guia</h3>
-                        <p>O Super Morango ajuda-te a identificar riscos.</p>
+                    <div class="bento-card">
+                        <h3>O Teu Papel</h3>
+                        <p>Identifica riscos e educa a tua comunidade.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECÇÃO 3: LABORATÓRIO (JOGO) -->
+        <!-- Secção 3 -->
         <section id="game">
-            <div class="game-ui">
-                <div class="ui-panel left">
-                    <div class="stat-card">
-                        <label>Nível de Saúde</label>
-                        <div class="progress-bar"><div id="health-fill" style="width: 100%;"></div></div>
-                    </div>
-                    <div class="stat-card">
-                        <label>Localização</label>
-                        <span id="current-location">Horta Comunitária</span>
-                    </div>
-                </div>
-                
-                <div id="game-viewport">
-                    <!-- Gerado por JS -->
-                    <div class="scan-line"></div>
-                </div>
-
-                <div class="ui-panel right">
-                    <div class="stat-card">
-                        <label>Pontuação</label>
-                        <span id="score-val">0000</span>
-                    </div>
-                    <button class="btn-scan" onclick="analyzeArea()">SCANNER BIO</button>
-                </div>
+            <h2 style="font-size: 2.5rem;">Laboratório de Identificação</h2>
+            <p>Localiza e clica nas pragas para neutralizar a ameaça.</p>
+            <div class="game-container" id="viewport">
+                <div class="scan-line"></div>
+                <!-- Pragas inseridas via JS -->
             </div>
         </section>
 
-        <!-- SECÇÃO 4: CERTIFICADO -->
-        <section id="completion">
-            <div class="cert-card glass">
-                <h2>Certificação Internacional</h2>
-                <p>Nomeado Guardião Oficial da Saúde das Plantas</p>
-                <input type="text" id="guardian-name" placeholder="Insira o seu nome completo">
-                <div class="cert-actions">
-                    <button class="btn-primary" onclick="generateProfessionalCert()">Emitir Certificado</button>
-                </div>
-                <div id="cert-render-area"></div>
+        <!-- Secção 4 -->
+        <section id="certification">
+            <div class="cert-box">
+                <h2 style="font-size: 2rem; margin-bottom: 10px;">Emissão de Credencial</h2>
+                <p>Conclui a missão para receberes o certificado oficial.</p>
+                <input type="text" id="userName" placeholder="Insere o teu Nome Completo">
+                <button class="btn-primary" onclick="generateCert()">Emitir Certificado ONU</button>
+                <div id="certPreview" style="margin-top: 30px;"></div>
             </div>
         </section>
     </main>
 
-    <canvas id="hidden-canvas" width="1200" height="800" style="display:none;"></canvas>
-    
+    <canvas id="certCanvas" width="1000" height="700" style="display:none;"></canvas>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="script.js"></script>
+    
+    <script>
+        // 1. Cursor
+        const cursor = document.getElementById('cursor');
+        const cursorF = document.getElementById('cursor-f');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            setTimeout(() => {
+                cursorF.style.left = e.clientX - 12 + 'px';
+                cursorF.style.top = e.clientY - 12 + 'px';
+            }, 50);
+        });
+
+        // 2. Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 800);
+            }, 1500);
+            initGame();
+        });
+
+        // 3. Jogo
+        let score = 0;
+        function initGame() {
+            const viewport = document.getElementById('viewport');
+            viewport.style.backgroundImage = "url('images/fundo-horta.jpg')";
+            viewport.style.backgroundSize = "cover";
+            
+            for(let i=0; i<6; i++) {
+                const p = document.createElement('img');
+                p.src = 'images/praga.png';
+                p.className = 'praga';
+                p.style.top = Math.random() * 80 + 10 + '%';
+                p.style.left = Math.random() * 80 + 10 + '%';
+                p.onclick = function() {
+                    this.style.display = 'none';
+                    score += 250;
+                    document.getElementById('score-display').innerText = `XP: ${score.toString().padStart(4, '0')}`;
+                    confetti({ particleCount: 30, origin: { x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight } });
+                };
+                viewport.appendChild(p);
+            }
+        }
+
+        // 4. Certificado
+        function generateCert() {
+            const name = document.getElementById('userName').value;
+            if(!name) return alert("Por favor, insere o teu nome para a credencial.");
+            
+            const canvas = document.getElementById('certCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Fundo Elegante
+            ctx.fillStyle = '#0b1d12';
+            ctx.fillRect(0,0,1000,700);
+            ctx.strokeStyle = '#2ecc71';
+            ctx.lineWidth = 20;
+            ctx.strokeRect(40,40,920,620);
+            
+            // Texto
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.font = '800 50px Lexend';
+            ctx.fillText('CERTIFICADO DE GUARDIÃO', 500, 150);
+            
+            ctx.font = '300 25px Lexend';
+            ctx.fillText('ESTA CREDENCIAL É ATRIBUÍDA A:', 500, 280);
+            
+            ctx.fillStyle = '#2ecc71';
+            ctx.font = '700 60px Lexend';
+            ctx.fillText(name.toUpperCase(), 500, 400);
+            
+            ctx.fillStyle = 'white';
+            ctx.font = '300 20px Lexend';
+            ctx.fillText('Pela excelência na proteção da Saúde das Plantas no Dia Internacional.', 500, 520);
+            
+            const dataUrl = canvas.toDataURL();
+            document.getElementById('certPreview').innerHTML = `
+                <img src="${dataUrl}" style="width:100%; border-radius:15px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+                <br><br>
+                <a href="${dataUrl}" download="Certificado_Guardiao.png" class="btn-primary">Descarregar Credencial</a>
+            `;
+            confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
+        }
+    </script>
 </body>
 </html>
