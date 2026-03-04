@@ -3,107 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guardiões das Plantas - Missão Internacional</title>
+    <title>Guardiões das Plantas | International Plant Health Day</title>
+    <!-- Fontes Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Cursor Personalizado -->
-    <div id="custom-cursor"></div>
-
-    <!-- Música e Sons -->
-    <audio id="bg-music" loop src="https://www.chosic.com/wp-content/uploads/2021/07/The-Green-Leaves-of-Summer.mp3"></audio>
-    <div class="audio-controls">
-        <button id="toggle-music" class="btn-circle">🎵</button>
+    <!-- Overlay de Carregamento (Portal Mágico) -->
+    <div id="loader">
+        <div class="strawberry-spinner"></div>
+        <p>A carregar Biosfera...</p>
     </div>
 
-    <!-- 1. PORTAL INICIAL -->
-    <section id="home" class="active">
-        <div class="particles" id="particles-js"></div>
-        <div class="hero-content">
-            <img src="images/super-morango.png" alt="Super Morango" class="floating-hero">
-            <h1 id="typing-text"></h1>
-            <button onclick="changeSection('story')" class="btn-main pulse">Entrar na Missão</button>
-        </div>
-    </section>
+    <!-- Cursor Personalizado de Alta Precisão -->
+    <div id="cursor"></div>
+    <div id="cursor-follower"></div>
 
-    <!-- 2. HISTÓRIA -->
-    <section id="story">
-        <div class="story-container">
-            <div class="story-block" data-aos="fade-up">
-                <h2>O Mistério das Folhas Tristes</h2>
-                <p>O Super Morango descobriu que muitas plantas estão a ficar doentes por causa de pequenos invasores e falta de cuidado...</p>
+    <nav class="glass-nav">
+        <div class="logo">GUARDIÕES<span>PLANTAS</span></div>
+        <div class="nav-stats">
+            <span id="nav-points">🌱 0 XP</span>
+            <button id="toggle-audio" title="Música Ambiente">🔇</button>
+        </div>
+    </nav>
+
+    <main id="main-scroller">
+        
+        <!-- SECÇÃO 1: HERO (PORTAL) -->
+        <section id="hero" class="vignette">
+            <div class="hero-bg-elements"></div>
+            <div class="content">
+                <div class="badge">Missão ONU 2024</div>
+                <h1 class="reveal-text">Protege o Verde,<br><span class="highlight">Salva o Futuro.</span></h1>
+                <p id="typing-hero" class="typewriter"></p>
+                <div class="hero-cta">
+                    <button class="btn-primary" onclick="scrollToSection('story')">Iniciar Missão</button>
+                    <button class="btn-secondary" onclick="scrollToSection('game')">Ir para o Laboratório</button>
+                </div>
             </div>
-            <div class="story-block" data-aos="fade-up">
-                <h2>A Ameaça das Pragas</h2>
-                <p>Insetos viajantes e doenças estão a atacar as nossas florestas. Sem as plantas, o oxigénio desaparece!</p>
+            <div class="hero-image">
+                <img src="images/super-morango.png" alt="Super Morango" class="float-animation">
             </div>
-            <button onclick="changeSection('mission-info')" class="btn-next">Próximo: A Nossa Missão ➔</button>
-        </div>
-    </section>
+        </section>
 
-    <!-- 3. MISSÃO INFO (Cards) -->
-    <section id="mission-info">
-        <h2>Por que as plantas são importantes?</h2>
-        <div class="cards-container">
-            <div class="card" onclick="openModal('oxigenio')">
-                <span>🌬️</span>
-                <h3>Oxigénio</h3>
+        <!-- SECÇÃO 2: STORYTELLING (BENTO GRID) -->
+        <section id="story">
+            <div class="container">
+                <h2 class="section-title">A Ciência por trás do Verde</h2>
+                <div class="bento-grid">
+                    <div class="bento-item tall" style="background-image: url('images/fundo-floresta.jpg');">
+                        <div class="overlay-text">
+                            <h3>Oxigénio Puro</h3>
+                            <p>80% do que respiras vem das plantas.</p>
+                        </div>
+                    </div>
+                    <div class="bento-item wide">
+                        <h3>A Ameaça Silenciosa</h3>
+                        <p>Pragas invasoras destroem 40% das culturas alimentares mundiais todos os anos.</p>
+                    </div>
+                    <div class="bento-item">
+                        <h3>Biodiversidade</h3>
+                        <p>Cada planta é um ecossistema.</p>
+                    </div>
+                    <div class="bento-item">
+                        <img src="images/super-morango.png" class="small-hero">
+                        <h3>O Teu Guia</h3>
+                        <p>O Super Morango ajuda-te a identificar riscos.</p>
+                    </div>
+                </div>
             </div>
-            <div class="card" onclick="openModal('comida')">
-                <span>🍎</span>
-                <h3>Comida</h3>
+        </section>
+
+        <!-- SECÇÃO 3: LABORATÓRIO (JOGO) -->
+        <section id="game">
+            <div class="game-ui">
+                <div class="ui-panel left">
+                    <div class="stat-card">
+                        <label>Nível de Saúde</label>
+                        <div class="progress-bar"><div id="health-fill" style="width: 100%;"></div></div>
+                    </div>
+                    <div class="stat-card">
+                        <label>Localização</label>
+                        <span id="current-location">Horta Comunitária</span>
+                    </div>
+                </div>
+                
+                <div id="game-viewport">
+                    <!-- Gerado por JS -->
+                    <div class="scan-line"></div>
+                </div>
+
+                <div class="ui-panel right">
+                    <div class="stat-card">
+                        <label>Pontuação</label>
+                        <span id="score-val">0000</span>
+                    </div>
+                    <button class="btn-scan" onclick="analyzeArea()">SCANNER BIO</button>
+                </div>
             </div>
-            <div class="card" onclick="openModal('equilibrio')">
-                <span>🌍</span>
-                <h3>Equilíbrio</h3>
+        </section>
+
+        <!-- SECÇÃO 4: CERTIFICADO -->
+        <section id="completion">
+            <div class="cert-card glass">
+                <h2>Certificação Internacional</h2>
+                <p>Nomeado Guardião Oficial da Saúde das Plantas</p>
+                <input type="text" id="guardian-name" placeholder="Insira o seu nome completo">
+                <div class="cert-actions">
+                    <button class="btn-primary" onclick="generateProfessionalCert()">Emitir Certificado</button>
+                </div>
+                <div id="cert-render-area"></div>
             </div>
-        </div>
-        <button onclick="changeSection('game')" class="btn-main">Começar Jogo Interativo</button>
-    </section>
+        </section>
+    </main>
 
-    <!-- 4. JOGO INTERATIVO -->
-    <section id="game">
-        <div class="game-header">
-            <div class="score">Pontos: <span id="points">0</span></div>
-            <div class="progress-bar-container">
-                <div id="progress-bar"></div>
-            </div>
-            <div id="scenario-title">Cenário: Horta</div>
-        </div>
-        <div id="game-canvas">
-            <!-- Os elementos clicáveis serão gerados via JS -->
-        </div>
-    </section>
-
-    <!-- 5. QUESTIONÁRIO FINAL -->
-    <section id="quiz">
-        <div class="quiz-box">
-            <h2 id="quiz-question">Pergunta?</h2>
-            <div id="quiz-options"></div>
-        </div>
-    </section>
-
-    <!-- 6. CERTIFICADO -->
-    <section id="certificate-section">
-        <h2>Parabéns, Guardião!</h2>
-        <input type="text" id="user-name" placeholder="Escreve o teu nome">
-        <button onclick="generateCertificate()" class="btn-main">Gerar Certificado</button>
-        <canvas id="certCanvas" width="800" height="600" style="display:none;"></canvas>
-        <div id="cert-preview"></div>
-    </section>
-
-    <!-- Overlay Modais -->
-    <div id="modal" class="modal-overlay" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 id="modal-title"></h2>
-            <p id="modal-text"></p>
-            <button onclick="closeModal()">Fechar</button>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <canvas id="hidden-canvas" width="1200" height="800" style="display:none;"></canvas>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
